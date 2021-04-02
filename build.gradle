@@ -13,6 +13,14 @@ repositories {
 }
 
 dependencies {
+	annotationProcessor "org.immutables:value:2.7.3"
+	compileOnly "org.immutables:value:2.7.3:annotations"
+	compileOnly "org.immutables:builder:2.7.3"
+	compileOnly "org.immutables:gson:2.7.3:annotations"
+
+	compile 'org.apache.commons:commons-csv:1.8'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.9'
+
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
