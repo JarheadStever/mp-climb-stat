@@ -13,7 +13,7 @@ class Component extends React.PureComponent {
         }
 
         return <div>
-            <h1>Hello, World</h1>
+            <h1>MP Climb Stat</h1>
             <form onSubmit={onSubmit}>
                 <input type="text"
                        id="input"
