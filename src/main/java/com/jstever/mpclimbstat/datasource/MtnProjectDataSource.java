@@ -28,18 +28,12 @@ public class MtnProjectDataSource {
         try {
 
             InputStream input = new URL(
-                    "https://www.mountainproject.com/user/200273632/jared-stever/tick-export")
-                    .openStream();
+                    "https://www.mountainproject.com/user/200273632/jared-stever/tick-export").openStream();
             List<String> csvLines = new BufferedReader(
-                    new InputStreamReader(input, StandardCharsets.UTF_8))
-                    .lines()
-                    .collect(Collectors.toList());
+                    new InputStreamReader(input, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
             String content = new String(String.join("\n", csvLines).getBytes());
             CsvSchema csvSchema = CsvSchema.emptySchema().withHeader();
-            MappingIterator<Tick> iterator = new CsvMapper()
-                    .readerFor(Tick.class)
-                    .with(csvSchema)
-                    .readValues(content);
+            MappingIterator<Tick> iterator = new CsvMapper().readerFor(Tick.class).with(csvSchema).readValues(content);
             while (iterator.hasNextValue()) {
                 ticks.add(iterator.nextValue());
             }
