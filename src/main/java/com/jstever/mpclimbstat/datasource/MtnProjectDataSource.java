@@ -3,11 +3,10 @@ package com.jstever.mpclimbstat.datasource;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.jstever.mpclimbstat.model.ImmutableTick;
 import com.jstever.mpclimbstat.model.Tick;
 // TODO: Jared: 4/2/21 remove logger imports
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,20 +27,22 @@ public class MtnProjectDataSource {
 
         try {
 
-            InputStream input = new URL("https://www.mountainproject.com/user/200273632/jared-stever/tick-export").openStream();
+            InputStream input = new URL(
+                    "https://www.mountainproject.com/user/200273632/jared-stever/tick-export")
+                    .openStream();
             List<String> csvLines = new BufferedReader(
                     new InputStreamReader(input, StandardCharsets.UTF_8))
                     .lines()
                     .collect(Collectors.toList());
-            String csv = String.join("\n", csvLines);
-            CsvMapper csvMapper = new CsvMapper();
+            String content = new String(String.join("\n", csvLines).getBytes());
             CsvSchema csvSchema = CsvSchema.emptySchema().withHeader();
-            String content = new String(csv.getBytes());
-            MappingIterator<Tick> it = csvMapper.readerFor(Tick.class).with(csvSchema).readValues(content);
-            while (it.hasNextValue()) {
-                ticks.add(it.nextValue());
+            MappingIterator<Tick> iterator = new CsvMapper()
+                    .readerFor(Tick.class)
+                    .with(csvSchema)
+                    .readValues(content);
+            while (iterator.hasNextValue()) {
+                ticks.add(iterator.nextValue());
             }
-
 
         } catch(IOException e) {
             // TODO: Jared: 4/1/21 Throw Exceptions back later if necessary in user lookup
