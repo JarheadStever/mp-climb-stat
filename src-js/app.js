@@ -37,8 +37,11 @@ class RopeSendsByGrade extends React.PureComponent {
 
     render() {
         const { ticks } = this.props;
+        const filteredTicks = ticks.filter((tick) => ((tick.style === "Lead") && (tick['lead-style'] !== "Fell/Hung")))
         return <div>
-            <span> {JSON.stringify(ticks[0])} </span>
+            {
+                    filteredTicks.map((tick, index) => (<div key={`${tick.route}${index}`}> { tick.route } </div>))
+            }
         </div>;
     }
 }
