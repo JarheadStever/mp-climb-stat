@@ -1,29 +1,46 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom'
 
-class Component extends React.PureComponent {
+class TicksPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { input: "" };
+        this.state = { ticks: [] };
+        console.log("flag")
+    }
+
+    componentDidMount() {
+        // TODO: 4/3/21 Refactor
+        fetch("/ticks", {
+            method: 'GET',
+            credentials: 'include'
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                this.setState( (prevState) => ({ ...prevState, ticks: json }));
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
-        const onSubmit = () => {
-            alert(`You submitted: ${this.state.input}`);
-        }
+        const { ticks } = this.state;
+        return <RopeSendsByGrade ticks={ticks}/>;
+    }
+}
 
+
+class RopeSendsByGrade extends React.PureComponent {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { ticks } = this.props;
         return <div>
-            <h1>MP Climb Stat</h1>
-            <form onSubmit={onSubmit}>
-                <input type="text"
-                       id="input"
-                       name="input"
-                       onChange={(event) => this.setState( { input: event.target.value })}
-                />
-                <input type="submit" value="Submit"/>
-            </form>
+            <span> {JSON.stringify(ticks[0])} </span>
         </div>;
     }
 }
 
-ReactDOM.render(<Component/>, document.getElementById('content'));
+ReactDOM.render(<TicksPage/>, document.getElementById('content'));
