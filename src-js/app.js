@@ -1,11 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom'
+import BoulderSendsByGrade from "./components/BoulderSendsByGrade";
+import RopeSendsByGrade from "./components/RopeSendsByGrade";
 
 class TicksPage extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = { ticks: [] };
-        console.log("flag")
+        this.state = {
+            ticks: [],
+            showBoulder: false,
+            showRope: false
+        };
+        this.showBoulderSends = this.showBoulderSends.bind(this);
+        this.showRopeSends = this.showRopeSends.bind(this);
     }
 
     componentDidMount() {
@@ -22,27 +30,25 @@ class TicksPage extends React.Component {
             });
     }
 
+    showBoulderSends() {
+        this.setState((prevState) => ({ ...prevState, showBoulder: true, showRope: false }));
+    }
+
+    showRopeSends() {
+        this.setState((prevState) => ({ ...prevState, showRope: true, showBoulder: false }));
+    }
+
     render() {
         const { ticks } = this.state;
-        return <RopeSendsByGrade ticks={ticks}/>;
-    }
-}
-
-
-class RopeSendsByGrade extends React.PureComponent {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const { ticks } = this.props;
-        const filteredTicks = ticks.filter((tick) => ((tick.style === "Lead") && (tick['lead-style'] !== "Fell/Hung")))
-        return <div>
-            {
-                    filteredTicks.map((tick, index) => (<div key={`${tick.route}${index}`}> { tick.route } </div>))
-            }
-        </div>;
+        return (
+            <div>
+                <button onClick={this.showRopeSends}>Show my rope sends!</button>
+                <button onClick={this.showBoulderSends}>Show my boulder sends!</button>
+                {this.state.showRope && <RopeSendsByGrade ticks={ticks}/>}
+                {this.state.showBoulder && <BoulderSendsByGrade ticks={ticks}/>}
+            </div>
+        )
+        // return <RopeSendsByGrade ticks={ticks}/>;
     }
 }
 
