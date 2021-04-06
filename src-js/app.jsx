@@ -3,17 +3,16 @@ import * as ReactDOM from 'react-dom'
 import BoulderSendsByGrade from "./components/BoulderSendsByGrade";
 import RopeSendsByGrade from "./components/RopeSendsByGrade";
 
+
 class TicksPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            ticks: [],
-            showBoulder: false,
-            showRope: false
+            responseTicks: [],
+            filteredTicks: [],
+            tickType: '',
         };
-        this.showBoulderSends = this.showBoulderSends.bind(this);
-        this.showRopeSends = this.showRopeSends.bind(this);
     }
 
     componentDidMount() {
@@ -24,31 +23,56 @@ class TicksPage extends React.Component {
         })
             .then((response) => response.json())
             .then((json) => {
-                this.setState( (prevState) => ({ ...prevState, ticks: json }));
+                this.setState( (prevState) => ({
+                    ...prevState,
+                    responseTicks: json,
+                    filteredTicks: this.computeRelevantTicks(json,'Lead'),
+                    tickType: 'Lead'
+                }));
             }).catch((error) => {
-                console.log(error);
-            });
+            console.log(error);
+        });
     }
 
-    showBoulderSends() {
-        this.setState((prevState) => ({ ...prevState, showBoulder: true, showRope: false }));
+    computeRelevantTicks(ticks, routeType) {
+        let relevantTicks;
+        if (routeType === 'Boulder') {
+            relevantTicks = ticks.filter((tick) =>
+                ((tick['route-type'] === routeType) && (tick['style'] !== "Attempt")));
+        } else if (routeType === 'Lead') {
+            relevantTicks = ticks.filter((tick) =>
+                ((tick['style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
+        }
+        return relevantTicks.sort((a, b) => (b['rating-code']) - a['rating-code']);
     }
 
-    showRopeSends() {
-        this.setState((prevState) => ({ ...prevState, showRope: true, showBoulder: false }));
+    updateTickType(routeType) {
+        const { responseTicks } = this.state;
+        const relevantTicks = this.computeRelevantTicks(responseTicks, routeType);
+        this.setState((prevState) => (
+            {
+                ...prevState,
+                filteredTicks: relevantTicks,
+                tickType: routeType
+            }
+        ))
     }
 
     render() {
-        const { ticks } = this.state;
+        const { filteredTicks, tickType } = this.state;
         return (
             <div>
-                <button onClick={this.showRopeSends}>Show my rope sends!</button>
-                <button onClick={this.showBoulderSends}>Show my boulder sends!</button>
-                {this.state.showRope && <RopeSendsByGrade ticks={ticks}/>}
-                {this.state.showBoulder && <BoulderSendsByGrade ticks={ticks}/>}
+                <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
+                <button onClick={() => this.updateTickType('Boulder')}>Show my boulder sends!</button>
+                {
+                    filteredTicks.length === 0 ?
+                        false :
+                        tickType === 'Lead' ?
+                            <RopeSendsByGrade ticks={filteredTicks}/> :
+                            <BoulderSendsByGrade ticks={filteredTicks}/>
+                }
             </div>
         )
-        // return <RopeSendsByGrade ticks={ticks}/>;
     }
 }
 

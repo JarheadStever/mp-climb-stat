@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 import org.springframework.lang.Nullable;
 
+
 @JsonSerialize(as = ImmutableTick.class)
 @JsonDeserialize(as = ImmutableTick.class)
 @Value.Immutable

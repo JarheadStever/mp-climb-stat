@@ -7,7 +7,7 @@ module.exports = {
     entry: './src-js/app.jsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.jsx',
+        filename: 'app.js',
     },
     devServer: {
         open: true,
@@ -24,6 +24,9 @@ module.exports = {
 
             }
         }
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
