@@ -1,6 +1,7 @@
 import * as React from 'react';
 import BoulderSendsByGrade from "./BoulderSendsByGrade";
 import RopeSendsByGrade from "./RopeSendsByGrade";
+import MetricContainer from "./MetricContainer";
 
 
 export default class TicksPage extends React.Component {
@@ -61,17 +62,59 @@ export default class TicksPage extends React.Component {
     render() {
         const { filteredTicks, tickType } = this.state;
         return (
-            <div>
-                <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
-                <button onClick={() => this.updateTickType('Boulder')}>Show my boulder sends!</button>
-                {
-                    filteredTicks.length === 0 ?
-                        false :
-                        tickType === 'Lead' ?
-                            <RopeSendsByGrade ticks={filteredTicks}/> :
-                            <BoulderSendsByGrade ticks={filteredTicks}/>
-                }
-            </div>
+            <>
+                <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    maxWidth: 1920,
+                    width: '100%',
+                    margin: '0px auto',
+                }}>
+                    <MetricContainer size="sm">
+                        <span>This is some text</span>
+                    </MetricContainer>
+                    <MetricContainer size="sm">
+                        <span>This is some more text</span>
+                    </MetricContainer>
+                    <MetricContainer size="sm">
+                        <span>This is even more text</span>
+                    </MetricContainer>
+                    <MetricContainer size="sm">
+                        <span>Ok I'll stop</span>
+                    </MetricContainer>
+                    <MetricContainer size="md">
+                        <span>Look I'm medium sized</span>
+                    </MetricContainer>
+                    <MetricContainer size="md">
+                        <span>Look I'm also medium sized</span>
+                    </MetricContainer>
+                    <MetricContainer size="lg">
+                        <span>I'm large</span>
+                    </MetricContainer>
+                    <MetricContainer size="sm">
+                        <span>I can also mix sm and md metrics</span>
+                    </MetricContainer>
+                    <MetricContainer size="md">
+                        <span>I'm chonky</span>
+                    </MetricContainer>
+                    <MetricContainer size="sm">
+                        <span>Ok I'm done</span>
+                    </MetricContainer>
+                </div>
+
+                <div>
+                    <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
+                    <button onClick={() => this.updateTickType('Boulder')}>Show my boulder sends!</button>
+                    {
+                        filteredTicks.length === 0 ?
+                            false :
+                            tickType === 'Lead' ?
+                                <RopeSendsByGrade ticks={filteredTicks}/> :
+                                <BoulderSendsByGrade ticks={filteredTicks}/>
+                    }
+                </div>
+            </>
         )
     }
 }
