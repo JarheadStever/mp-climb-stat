@@ -2,6 +2,7 @@ import * as React from 'react';
 import BoulderSendsByGrade from "./BoulderSendsByGrade";
 import RopeSendsByGrade from "./RopeSendsByGrade";
 import MetricContainer from "./MetricContainer";
+import SimpleMetric from "./SimpleMetric";
 
 
 export default class TicksPage extends React.Component {
@@ -63,45 +64,55 @@ export default class TicksPage extends React.Component {
         const { filteredTicks, tickType } = this.state;
         return (
             <>
-                <div style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    flexDirection: 'row',
-                    maxWidth: 1920,
-                    width: '100%',
-                    margin: '0px auto',
-                }}>
-                    <MetricContainer size="sm">
-                        <span>This is some text</span>
-                    </MetricContainer>
-                    <MetricContainer size="sm">
-                        <span>This is some more text</span>
-                    </MetricContainer>
-                    <MetricContainer size="sm">
-                        <span>This is even more text</span>
-                    </MetricContainer>
-                    <MetricContainer size="sm">
-                        <span>Ok I'll stop</span>
-                    </MetricContainer>
-                    <MetricContainer size="md">
-                        <span>Look I'm medium sized</span>
-                    </MetricContainer>
-                    <MetricContainer size="md">
-                        <span>Look I'm also medium sized</span>
-                    </MetricContainer>
-                    <MetricContainer size="lg">
-                        <span>I'm large</span>
-                    </MetricContainer>
-                    <MetricContainer size="sm">
-                        <span>I can also mix sm and md metrics</span>
-                    </MetricContainer>
-                    <MetricContainer size="md">
-                        <span>I'm chonky</span>
-                    </MetricContainer>
-                    <MetricContainer size="sm">
-                        <span>Ok I'm done</span>
-                    </MetricContainer>
-                </div>
+                { filteredTicks.length !== 0 &&
+                    <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        maxWidth: 1920,
+                        width: '100%',
+                        margin: '0px auto',
+                    }}>
+                        <MetricContainer size="sm">
+                            <SimpleMetric
+                                title="Hardest Grade"
+                                subtitle={`The hardest ${tickType === 'Lead' ? 'lead' : 'bouldering'} grade you have sent`}
+                                value={filteredTicks[0]['rating']}
+                            />
+                        </MetricContainer>
+                        <MetricContainer size="sm">
+                            <SimpleMetric
+                                title="Number of Routes"
+                                subtitle="The total number of routes that meet the selected filters"
+                                value={filteredTicks.length.toString()}
+                            />
+                        </MetricContainer>
+                        <MetricContainer size="sm">
+                            <span>This is even more text</span>
+                        </MetricContainer>
+                        <MetricContainer size="sm">
+                            <span>Ok I'll stop</span>
+                        </MetricContainer>
+                        <MetricContainer size="md">
+                            <span>Look I'm medium sized</span>
+                        </MetricContainer>
+                        <MetricContainer size="md">
+                            <span>Look I'm also medium sized</span>
+                        </MetricContainer>
+                        <MetricContainer size="lg">
+                            <span>I'm large</span>
+                        </MetricContainer>
+                        <MetricContainer size="sm">
+                            <span>I can also mix sm and md metrics</span>
+                        </MetricContainer>
+                        <MetricContainer size="md">
+                            <span>I'm chonky</span>
+                        </MetricContainer>
+                        <MetricContainer size="sm">
+                            <span>Ok I'm done</span>
+                        </MetricContainer>
+                    </div>
+                }
 
                 <div>
                     <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
