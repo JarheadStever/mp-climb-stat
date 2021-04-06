@@ -2,8 +2,9 @@ package com.jstever.mpclimbstat.controller;
 
 import com.jstever.mpclimbstat.datasource.MtnProjectDataSource;
 import com.jstever.mpclimbstat.model.Tick;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// TODO: Jared: 4/5/21 remove logger imports
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

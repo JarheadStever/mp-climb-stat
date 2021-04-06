@@ -4,10 +4,10 @@ const webpack = require("webpack");
 
 module.exports = {
     mode: 'development',
-    entry: './src-js/app.js',
+    entry: './src-js/app.jsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.js',
+        filename: 'app.jsx',
     },
     devServer: {
         open: true,
