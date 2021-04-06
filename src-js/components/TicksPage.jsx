@@ -28,9 +28,10 @@ export default class TicksPage extends React.Component {
                     filteredTicks: this.computeRelevantTicks(json,'Lead'),
                     tickType: 'Lead'
                 }));
-            }).catch((error) => {
-            console.log(error);
-        });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     computeRelevantTicks(ticks, routeType) {
