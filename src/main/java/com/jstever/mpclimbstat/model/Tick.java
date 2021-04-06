@@ -6,70 +6,71 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 import org.springframework.lang.Nullable;
 
+
 @JsonSerialize(as = ImmutableTick.class)
 @JsonDeserialize(as = ImmutableTick.class)
 @Value.Immutable
 public interface Tick {
 
     @Nullable
-    @JsonProperty("Date")
+    @JsonProperty("date")
     String getDate();
     // TODO: Jared: 4/2/21 use java.util.Calendar to handle Date field for sorting?
     // probably unnecessary since they can be sorted alphabetically as Strings
 
     @Nullable
-    @JsonProperty("Route")
+    @JsonProperty("route")
     String getRoute();
 
     @Nullable
-    @JsonProperty("Rating")
+    @JsonProperty("rating")
     String getRating(); // grade
 
     @Nullable
-    @JsonProperty("Notes")
+    @JsonProperty("notes")
     String getNotes();
 
     @Nullable
-    @JsonProperty("URL")
+    @JsonProperty("url")
     String getUrl();
 
     @Nullable
-    @JsonProperty("Pitches")
+    @JsonProperty("pitches")
     Integer getPitches();
 
     @Nullable
-    @JsonProperty("Location")
+    @JsonProperty("location")
     String getLocation();
 
     @Nullable
-    @JsonProperty("Avg Stars")
+    @JsonProperty("avg-stars")
     Double getAvgStars();
 
     @Nullable
-    @JsonProperty("Your Stars")
+    @JsonProperty("your-stars")
     Integer getYourStars();
 
     @Nullable
-    @JsonProperty("Style")
+    @JsonProperty("style")
     String getStyle();
 
     @Nullable
-    @JsonProperty("Lead Style")
+    @JsonProperty("lead-style")
     String getLeadStyle();
 
     @Nullable
-    @JsonProperty("Route Type")
+    @JsonProperty("route-type")
     String getRouteType();
 
     @Nullable
-    @JsonProperty("Your Rating")
+    @JsonProperty("your-rating")
     String getYourRating();
 
     @Nullable
-    @JsonProperty("Length")
+    @JsonProperty("length")
     Integer getLength();
 
     @Nullable
-    @JsonProperty("Rating Code")
+    @JsonProperty("rating-code")
     Integer getRatingCode();
 }

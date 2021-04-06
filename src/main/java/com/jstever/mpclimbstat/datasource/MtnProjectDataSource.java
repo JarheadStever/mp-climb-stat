@@ -31,7 +31,11 @@ public class MtnProjectDataSource {
                     "https://www.mountainproject.com/user/200273632/jared-stever/tick-export").openStream();
             List<String> csvLines = new BufferedReader(
                     new InputStreamReader(input, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+            String header = csvLines.remove(0);
+            String skewerCaseHeader = header.replaceAll(" ", "-").toLowerCase();
+            csvLines.add(0, skewerCaseHeader);
             String content = new String(String.join("\n", csvLines).getBytes());
+            System.out.println(content);
             CsvSchema csvSchema = CsvSchema.emptySchema().withHeader();
             MappingIterator<Tick> iterator = new CsvMapper().readerFor(Tick.class).with(csvSchema).readValues(content);
             while (iterator.hasNextValue()) {

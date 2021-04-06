@@ -4,7 +4,7 @@ const webpack = require("webpack");
 
 module.exports = {
     mode: 'development',
-    entry: './src-js/app.js',
+    entry: './src-js/app.jsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js',
@@ -13,7 +13,20 @@ module.exports = {
         open: true,
         contentBase: path.join(__dirname, 'dist'),
         host: 'localhost',
-        port:3000
+        port:3000,
+        proxy: {
+            '/ticks': {
+                target: 'http://localhost:8080/ticks',
+                secure: false,
+                onProxyRes: response => {
+                    response.headers['access-control-allow-origin'] = 'http://localhost:8080';
+                },
+
+            }
+        }
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
