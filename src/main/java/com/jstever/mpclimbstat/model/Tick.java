@@ -51,7 +51,7 @@ public interface Tick {
     Integer getYourStars();
 
     @Nullable
-    @JsonProperty("style")
+    @JsonProperty("climb-style")
     String getStyle();
 
     @Nullable

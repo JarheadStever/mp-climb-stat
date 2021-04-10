@@ -39,10 +39,10 @@ export default class TicksPage extends React.Component {
         let relevantTicks;
         if (routeType === 'Boulder') {
             relevantTicks = ticks.filter((tick) =>
-                ((tick['route-type'] === routeType) && (tick['style'] !== "Attempt")));
+                ((tick['route-type'] === routeType) && (tick['climb-style'] !== "Attempt")));
         } else if (routeType === 'Lead') {
             relevantTicks = ticks.filter((tick) =>
-                ((tick['style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
+                ((tick['climb-style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
         }
         return relevantTicks.sort((a, b) => (b['rating-code']) - a['rating-code']);
     }
