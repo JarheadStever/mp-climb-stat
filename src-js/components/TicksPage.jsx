@@ -1,7 +1,8 @@
 import * as React from 'react';
 import BoulderSendsByGrade from "./BoulderSendsByGrade";
-import RopeSendsByGrade from "./RopeSendsByGrade";
 import MetricContainer from "./MetricContainer";
+import RechartsBarGraph from "./RechartsBarGraph";
+import RopeSendsByGrade from "./RopeSendsByGrade";
 
 
 export default class TicksPage extends React.Component {
@@ -79,18 +80,19 @@ export default class TicksPage extends React.Component {
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>This is even more text</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>Ok I'll stop</span>
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <span>Look I'm medium sized</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="md">
                         <span>Look I'm also medium sized</span>
                     </MetricContainer>
                     <MetricContainer size="lg">
-                        <span>I'm large</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>I can also mix sm and md metrics</span>
