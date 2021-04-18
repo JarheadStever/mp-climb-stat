@@ -12,10 +12,11 @@ import {
 } from "recharts";
 import "../scss/RechartsGraph.scss"
 
+
 // TODO: Jared: 4/9/21 add support for using graphType input
 const supportedTypes = [ 'bar', 'line' ];
 let groupedData = {};
-// const noMargin = { top: 0, left: 0, right: 0, bottom: 0 };
+// maybe move margins into <BarChart> later
 const margins = { top: 0, left: 5, right: 10, bottom: 15 };
 
 export default class RechartsBarGraph extends React.Component {
@@ -43,15 +44,12 @@ export default class RechartsBarGraph extends React.Component {
             .map(([key, value]) => {
                 return {ratingCode: key, count: value};
             });
-        console.log(ticks);
 
         return(
             // TODO: Jared: 4/8/21 add className for CSS formatting if needed
             <ResponsiveContainer className={`RechartsBorder`}>
                 <BarChart
                     data={ticks}
-                    //margin= {{ right: 10 }}
-                    //margin = {noMargin}
                     margin = {margins}
                 >
                     <XAxis dataKey="ratingCode">
