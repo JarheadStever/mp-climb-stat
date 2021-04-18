@@ -1,4 +1,5 @@
-import * as React from 'react';
+import * as React from "react";
+
 import BoulderSendsByGrade from "./BoulderSendsByGrade";
 import MetricContainer from "./MetricContainer";
 import RechartsBarGraph from "./RechartsBarGraph";
@@ -73,10 +74,10 @@ export default class TicksPage extends React.Component {
                     margin: '0px auto',
                 }}>
                     <MetricContainer size="sm">
-                        <span>This is some text</span>
+                        <span>You, my friend, are tragically bad at rock climbing.</span>
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <span>This is some more text</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>This is even more text</span>

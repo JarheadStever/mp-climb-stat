@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import PropTypes from "prop-types";
 import {
     BarChart,
@@ -6,14 +6,17 @@ import {
     XAxis,
     YAxis,
     Tooltip,
-    Legend, ResponsiveContainer
+    Legend,
+    ResponsiveContainer,
+    Label
 } from "recharts";
-import '../scss/RechartsGraph.scss'
+import "../scss/RechartsGraph.scss"
 
 // TODO: Jared: 4/9/21 add support for using graphType input
 const supportedTypes = [ 'bar', 'line' ];
 let groupedData = {};
-//const noMargin = { top: 0, left: 0, right: 0, bottom: 0 };
+// const noMargin = { top: 0, left: 0, right: 0, bottom: 0 };
+const margins = { top: 0, left: 5, right: 10, bottom: 15 };
 
 export default class RechartsBarGraph extends React.Component {
 
@@ -24,39 +27,51 @@ export default class RechartsBarGraph extends React.Component {
         }
     }
 
-    // sortStuff(theData) {
-    //     for (const tick in theData) {
-    //         const grade = tick['rating-code'];
-    //         if (!(groupedData[grade])) {
-    //             groupedData[grade] = [];
-    //         }
-    //         groupedData[grade].push(tick);
-    //     }
-    // }
-
     render() {
-        // TODO: Jared: 4/9/21 add support for sorting via input
+        // TODO: Jared: 4/9/21 add support for sorting by input parameters
         const { graphType, data } = this.props;
-        const newStuff = data.reduce(function(out, cur) {
-                let r = cur['rating-code'];
-                out.codes[r] = (out.codes[r] || 0) + 1;
-                return out;
-            }, {'codes':{}});
-        console.log(newStuff);
+
+        const newStuff = data.reduce(
+            (acc, el) => {
+                acc[el['rating-code']] = (acc[el['rating-code']] || 0) + 1;
+                return acc;
+            },
+            {}
+        );
+
+        const ticks = Object.entries(newStuff)
+            .map(([key, value]) => {
+                return {ratingCode: key, count: value};
+            });
+        console.log(ticks);
+
         return(
             // TODO: Jared: 4/8/21 add className for CSS formatting if needed
             <ResponsiveContainer className={`RechartsBorder`}>
                 <BarChart
-                    //width={500}
-                    //height={300}
-                    data={newStuff.codes}
-                    margin= {{ right: 10 }}
+                    data={ticks}
+                    //margin= {{ right: 10 }}
+                    //margin = {noMargin}
+                    margin = {margins}
                 >
-                    <XAxis dataKey="codes" />
-                    <YAxis width={40} />
+                    <XAxis dataKey="ratingCode">
+                        <Label
+                            value='Rating Code'
+                            position='insideBottom'
+                            offset={-10}
+                            style={{ textAnchor: 'middle' }}
+                        />
+                    </XAxis>
+                    <YAxis width={40}>
+                        <Label
+                            value='Number of Ticks'
+                            angle={-90}
+                            position='insideLeft'
+                            style={{ textAnchor: 'middle' }}
+                        />
+                    </YAxis>
                     <Tooltip />
-                    <Legend />
-                    <Bar dataKey="codes or something" />
+                    <Bar dataKey="count" />
                 </BarChart>
             </ResponsiveContainer>
         );
