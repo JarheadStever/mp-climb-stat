@@ -1,21 +1,16 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import {
     BarChart,
     Bar,
     XAxis,
     YAxis,
     Tooltip,
-    Legend,
     ResponsiveContainer,
     Label
 } from "recharts";
 import "../scss/RechartsGraph.scss"
 
 
-// TODO: Jared: 4/9/21 add support for using graphType input
-const supportedTypes = [ 'bar', 'line' ];
-let groupedData = {};
 // maybe move margins into <BarChart> later
 const margins = { top: 0, left: 5, right: 10, bottom: 15 };
 
@@ -23,16 +18,13 @@ export default class RechartsBarGraph extends React.Component {
 
     constructor(props) {
         super(props);
-        if (!supportedTypes.includes(this.props.graphType)) {
-            throw `type: ${this.props.graphType} not supported, valid types are ${supportedTypes}`;
-        }
     }
 
     render() {
         // TODO: Jared: 4/9/21 add support for sorting by input parameters
-        const { graphType, data } = this.props;
+        const { data } = this.props;
 
-        const newStuff = data.reduce(
+        const counts = data.reduce(
             (acc, el) => {
                 acc[el['rating-code']] = (acc[el['rating-code']] || 0) + 1;
                 return acc;
@@ -40,7 +32,7 @@ export default class RechartsBarGraph extends React.Component {
             {}
         );
 
-        const ticks = Object.entries(newStuff)
+        const ticks = Object.entries(counts)
             .map(([key, value]) => {
                 return {ratingCode: key, count: value};
             });
@@ -75,7 +67,3 @@ export default class RechartsBarGraph extends React.Component {
         );
     }
 }
-
-RechartsBarGraph.propTypes = {
-    graphType: PropTypes.string
-};
