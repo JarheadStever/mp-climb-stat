@@ -1,7 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
+
 import BoulderSendsByGrade from "./BoulderSendsByGrade";
-import RopeSendsByGrade from "./RopeSendsByGrade";
 import MetricContainer from "./MetricContainer";
+import RechartsBarGraph from "./RechartsBarGraph";
+import RopeSendsByGrade from "./RopeSendsByGrade";
 
 
 export default class TicksPage extends React.Component {
@@ -39,10 +41,10 @@ export default class TicksPage extends React.Component {
         let relevantTicks;
         if (routeType === 'Boulder') {
             relevantTicks = ticks.filter((tick) =>
-                ((tick['route-type'] === routeType) && (tick['style'] !== "Attempt")));
+                ((tick['route-type'] === routeType) && (tick['climb-style'] !== "Attempt")));
         } else if (routeType === 'Lead') {
             relevantTicks = ticks.filter((tick) =>
-                ((tick['style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
+                ((tick['climb-style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
         }
         return relevantTicks.sort((a, b) => (b['rating-code']) - a['rating-code']);
     }
@@ -72,25 +74,26 @@ export default class TicksPage extends React.Component {
                     margin: '0px auto',
                 }}>
                     <MetricContainer size="sm">
-                        <span>This is some text</span>
+                        <span>You, my friend, are tragically bad at rock climbing.</span>
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <span>This is some more text</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>This is even more text</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>Ok I'll stop</span>
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <span>Look I'm medium sized</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="md">
                         <span>Look I'm also medium sized</span>
                     </MetricContainer>
                     <MetricContainer size="lg">
-                        <span>I'm large</span>
+                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>I can also mix sm and md metrics</span>

@@ -4,7 +4,10 @@ const webpack = require("webpack");
 
 module.exports = {
     mode: 'development',
-    entry: './src-js/app.jsx',
+    entry: [
+        './node_modules/regenerator-runtime/runtime.js',
+        './src-js/app.jsx',
+    ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js',
