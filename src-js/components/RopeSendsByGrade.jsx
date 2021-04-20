@@ -13,7 +13,7 @@ export default class RopeSendsByGrade extends React.PureComponent {
             <p>Jared's sorted rope sends are:</p>
             {
                 ticks.map((tick, index) =>
-                    (<div key={`${tick['route']}${index}`}> { tick['route'] } { tick['rating'] } </div>))
+                    (<div key={`${tick['route']}${index}`}> {tick['route']} {tick['rating']} </div>))
             }
         </div>;
     }

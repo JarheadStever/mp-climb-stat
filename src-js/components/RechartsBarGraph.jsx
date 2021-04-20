@@ -22,11 +22,16 @@ export default class RechartsBarGraph extends React.Component {
 
     render() {
         // TODO: Jared: 4/9/21 add support for sorting by input parameters
-        const { data } = this.props;
+        const { data, xAxisMetric } = this.props;
+        //const xAxisDataKey = xAxisMetric.replace(/-./g, x=>x[1].toUpperCase());
+        const xAxisLabel = xAxisMetric
+            .split('-')
+            .map(x => x[0].toUpperCase() + x.substr(1))
+            .join(' ');
 
         const counts = data.reduce(
             (acc, el) => {
-                acc[el['rating-code']] = (acc[el['rating-code']] || 0) + 1;
+                acc[el[xAxisMetric]] = (acc[el[xAxisMetric]] || 0) + 1;
                 return acc;
             },
             {}
@@ -34,7 +39,7 @@ export default class RechartsBarGraph extends React.Component {
 
         const ticks = Object.entries(counts)
             .map(([key, value]) => {
-                return {ratingCode: key, count: value};
+                return {xKey: key, Number: value};
             });
 
         return(
@@ -42,11 +47,11 @@ export default class RechartsBarGraph extends React.Component {
             <ResponsiveContainer className={`RechartsBorder`}>
                 <BarChart
                     data={ticks}
-                    margin = {margins}
+                    margin={margins}
                 >
-                    <XAxis dataKey="ratingCode">
+                    <XAxis dataKey="xKey">
                         <Label
-                            value='Rating Code'
+                            value={xAxisLabel}
                             position='insideBottom'
                             offset={-10}
                             style={{ textAnchor: 'middle' }}
@@ -54,14 +59,14 @@ export default class RechartsBarGraph extends React.Component {
                     </XAxis>
                     <YAxis width={40}>
                         <Label
-                            value='Number of Ticks'
+                            value='Number of Sends'
                             angle={-90}
                             position='insideLeft'
                             style={{ textAnchor: 'middle' }}
                         />
                     </YAxis>
-                    <Tooltip />
-                    <Bar dataKey="count" />
+                    <Tooltip label="xKey" labelFormatter={(x) => xAxisLabel + ": " + x} />
+                    <Bar dataKey="Number" />
                 </BarChart>
             </ResponsiveContainer>
         );

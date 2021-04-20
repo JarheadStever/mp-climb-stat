@@ -13,6 +13,7 @@ export default class TicksPage extends React.Component {
         this.state = {
             responseTicks: [],
             filteredTicks: [],
+            listHighToLow: true,
             tickType: '',
         };
     }
@@ -28,7 +29,9 @@ export default class TicksPage extends React.Component {
                 this.setState( (prevState) => ({
                     ...prevState,
                     responseTicks: json,
-                    filteredTicks: this.computeRelevantTicks(json,'Lead'),
+                    filteredTicks: this.sortRelevantTicks(
+                        this.computeRelevantTicks(json,'Lead'),
+                        'rating-code'),
                     tickType: 'Lead'
                 }));
             })
@@ -46,7 +49,26 @@ export default class TicksPage extends React.Component {
             relevantTicks = ticks.filter((tick) =>
                 ((tick['climb-style'] === "Lead") && (tick['lead-style'] !== "Fell/Hung")));
         }
-        return relevantTicks.sort((a, b) => (b['rating-code']) - a['rating-code']);
+        return relevantTicks;
+    }
+
+    sortRelevantTicks(ticks, metric, highToLow=false) {
+        let copy = [...ticks];
+        let sortedTicks;
+        if (!highToLow) {
+            sortedTicks = copy.sort((a, b) => (
+                // sort by the metric
+                ((a[metric] > b[metric]) - (a[metric] < b[metric]))
+                // then by route name
+                || ((a['route'] > b['route']) - (a['route'] < b['route']))
+            ));
+        } else {
+            sortedTicks = copy.sort((a, b) => (
+                ((a[metric] < b[metric]) - (a[metric] > b[metric]))
+                || ((a['route'] > b['route']) - (a['route'] < b['route']))
+            ));
+        }
+        return sortedTicks;
     }
 
     updateTickType(routeType) {
@@ -55,8 +77,17 @@ export default class TicksPage extends React.Component {
         this.setState((prevState) => (
             {
                 ...prevState,
-                filteredTicks: relevantTicks,
+                filteredTicks: this.sortRelevantTicks(relevantTicks, 'rating-code'),
                 tickType: routeType
+            }
+        ))
+    }
+
+    invertListSort() {
+        this.setState((prevState) => (
+            {
+                ...prevState,
+                listHighToLow: !this.state.listHighToLow
             }
         ))
     }
@@ -65,6 +96,10 @@ export default class TicksPage extends React.Component {
         const { filteredTicks, tickType } = this.state;
         return (
             <>
+                <div>
+                    <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
+                    <button onClick={() => this.updateTickType('Boulder')}>Show my boulder sends!</button>
+                </div>
                 <div style={{
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -77,44 +112,53 @@ export default class TicksPage extends React.Component {
                         <span>You, my friend, are tragically bad at rock climbing.</span>
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <span>This is even more text</span>
-                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <span>Ok I'll stop</span>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="length" />
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <span>Look I'm also medium sized</span>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
                     </MetricContainer>
                     <MetricContainer size="lg">
-                        <RechartsBarGraph data={filteredTicks} graphType="bar"/>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
+                    </MetricContainer>
+                    <MetricContainer size="lg">
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>I can also mix sm and md metrics</span>
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <span>I'm chonky</span>
+                        <RechartsBarGraph data={filteredTicks} xAxisMetric="length" />
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>Ok I'm done</span>
                     </MetricContainer>
                 </div>
-
                 <div>
-                    <button onClick={() => this.updateTickType('Lead')}>Show my rope sends!</button>
-                    <button onClick={() => this.updateTickType('Boulder')}>Show my boulder sends!</button>
+                    <button onClick={() => this.invertListSort()}>Invert sort</button>
                     {
                         filteredTicks.length === 0 ?
                             false :
                             tickType === 'Lead' ?
-                                <RopeSendsByGrade ticks={filteredTicks}/> :
-                                <BoulderSendsByGrade ticks={filteredTicks}/>
+                                <RopeSendsByGrade ticks={
+                                    this.sortRelevantTicks(
+                                        filteredTicks,
+                                        'rating-code',
+                                        this.state.listHighToLow)
+                                }/> :
+                                <BoulderSendsByGrade ticks={
+                                    this.sortRelevantTicks(filteredTicks,
+                                        'rating-code',
+                                        this.state.listHighToLow)
+                                }/>
                     }
                 </div>
             </>
