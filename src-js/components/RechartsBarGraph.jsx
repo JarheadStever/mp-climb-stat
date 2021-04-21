@@ -22,7 +22,9 @@ export default class RechartsBarGraph extends React.Component {
 
     render() {
         // TODO: Jared: 4/9/21 add support for sorting by input parameters
-        const { data, xAxisMetric } = this.props;
+        // sorting just added toTicksPage, maybe we keep it there instead of adding sorting
+        // to all the difference graph components that will likely be made.
+        const { data, xAxisMetric, color} = this.props;
         //const xAxisDataKey = xAxisMetric.replace(/-./g, x=>x[1].toUpperCase());
         const xAxisLabel = xAxisMetric
             .split('-')
@@ -44,7 +46,8 @@ export default class RechartsBarGraph extends React.Component {
 
         return(
             // TODO: Jared: 4/8/21 add className for CSS formatting if needed
-            <ResponsiveContainer className={`RechartsBorder`}>
+            // <ResponsiveContainer className={`RechartsBorder`}>
+            <ResponsiveContainer>
                 <BarChart
                     data={ticks}
                     margin={margins}
@@ -54,7 +57,10 @@ export default class RechartsBarGraph extends React.Component {
                             value={xAxisLabel}
                             position='insideBottom'
                             offset={-10}
-                            style={{ textAnchor: 'middle' }}
+                            style={{
+                                textAnchor: 'middle',
+                                fontFamily: 'Comic Sans MS'
+                            }}
                         />
                     </XAxis>
                     <YAxis width={40}>
@@ -62,11 +68,14 @@ export default class RechartsBarGraph extends React.Component {
                             value='Number of Sends'
                             angle={-90}
                             position='insideLeft'
-                            style={{ textAnchor: 'middle' }}
+                            style={{
+                                textAnchor: 'middle',
+                                fontFamily: 'Comic Sans MS'
+                            }}
                         />
                     </YAxis>
                     <Tooltip label="xKey" labelFormatter={(x) => xAxisLabel + ": " + x} />
-                    <Bar dataKey="Number" />
+                    <Bar dataKey="Number" fill={color} />
                 </BarChart>
             </ResponsiveContainer>
         );

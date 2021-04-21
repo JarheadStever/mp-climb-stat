@@ -5,7 +5,7 @@ $metric-padding-horizontal: 24px;
 $metric-margin-horizontal: 10px;
 $metric-padding-vertical: 24px;
 $metric-margin-vertical: 10px;
-$metric-border-width: 1px;
+$metric-border-width: 2px;
 $total-metric-overhead: 2 * ($metric-padding-horizontal + $metric-margin-horizontal + $metric-border-width);
 
 .MetricContainer-sm {
@@ -15,7 +15,7 @@ $total-metric-overhead: 2 * ($metric-padding-horizontal + $metric-margin-horizon
   max-width: calc((#{$page-width} / 4) - #{$total-metric-overhead});
   width: calc(25% - #{$total-metric-overhead});
   height: $unit-height;
-  border: $metric-border-width solid #D3D3D3;
+  border: $metric-border-width solid #EEBB78;
   border-radius: 8px;
   flex-grow: 1;
   flex-shrink: 1;
@@ -28,7 +28,7 @@ $total-metric-overhead: 2 * ($metric-padding-horizontal + $metric-margin-horizon
   max-width: calc((#{$page-width} / 2) - #{$total-metric-overhead});
   width: calc(50% - #{$total-metric-overhead});
   height: $unit-height;
-  border: $metric-border-width solid #D3D3D3;
+  border: $metric-border-width solid #78E6EE;
   border-radius: 8px;
   flex-grow: 1;
   flex-shrink: 1;
@@ -41,7 +41,7 @@ $total-metric-overhead: 2 * ($metric-padding-horizontal + $metric-margin-horizon
   max-width: calc(#{$page-width} - #{$total-metric-overhead});
   width: calc(100% - #{$total-metric-overhead});
   height: $unit-height;
-  border: $metric-border-width solid #D3D3D3;
+  border: $metric-border-width solid #EE78AB;
   border-radius: 8px;
   flex-grow: 1;
   flex-shrink: 1;

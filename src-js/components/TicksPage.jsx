@@ -4,6 +4,7 @@ import BoulderSendsByGrade from "./BoulderSendsByGrade";
 import MetricContainer from "./MetricContainer";
 import RechartsBarGraph from "./RechartsBarGraph";
 import RopeSendsByGrade from "./RopeSendsByGrade";
+import {ResponsiveContainer} from "recharts";
 
 
 export default class TicksPage extends React.Component {
@@ -110,33 +111,68 @@ export default class TicksPage extends React.Component {
                 }}>
                     <MetricContainer size="sm">
                         <span>You, my friend, are tragically bad at rock climbing.</span>
+                        <ResponsiveContainer>
+                            <img src="https://cdn.theatlantic.com/thumbor/w--tTVHx1YvvXLuhEtbvcxH62F4=/325x26:1915x1218/1200x900/media/img/mt/2015/04/PoopEmojiREV/original.jpg" />
+                        </ResponsiveContainer>
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="rating-code"
+                            color="#FF0000"
+                        />
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="rating"
+                            color="#FFA500"
+                        />
                     </MetricContainer>
                     <MetricContainer size="sm">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="length" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="length"
+                        />
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="rating-code"
+                            color="#008000"
+                        />
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="rating"
+                            color="#0000FF"
+                        />
                     </MetricContainer>
                     <MetricContainer size="lg">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="rating"
+                            color="#800080"
+                        />
                     </MetricContainer>
                     <MetricContainer size="lg">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="rating-code" />
+                        <RechartsBarGraph
+                            // non-numeric x-axis metrics need to be sorted prior to graphing
+                            data={this.sortRelevantTicks(filteredTicks, 'date')}
+                            xAxisMetric="date"
+                            color="#800000"
+                        />
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>I can also mix sm and md metrics</span>
                     </MetricContainer>
                     <MetricContainer size="md">
-                        <RechartsBarGraph data={filteredTicks} xAxisMetric="length" />
+                        <RechartsBarGraph
+                            data={filteredTicks}
+                            xAxisMetric="length"
+                            color="#FF007F"
+                        />
                     </MetricContainer>
                     <MetricContainer size="sm">
                         <span>Ok I'm done</span>
