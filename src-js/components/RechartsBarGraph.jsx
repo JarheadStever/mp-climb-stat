@@ -12,7 +12,7 @@ import "../scss/RechartsGraph.scss"
 
 
 // maybe move margins into <BarChart> later
-const margins = { top: 0, left: 5, right: 10, bottom: 15 };
+const margins = { top: 17, left: 10, right: 23, bottom: 15 };
 
 export default class RechartsBarGraph extends React.Component {
 
@@ -24,7 +24,7 @@ export default class RechartsBarGraph extends React.Component {
         // TODO: Jared: 4/9/21 add support for sorting by input parameters
         // sorting just added toTicksPage, maybe we keep it there instead of adding sorting
         // to all the difference graph components that will likely be made.
-        const { data, xAxisMetric, color} = this.props;
+        const { data, xAxisMetric, color } = this.props;
         //const xAxisDataKey = xAxisMetric.replace(/-./g, x=>x[1].toUpperCase());
         const xAxisLabel = xAxisMetric
             .split('-')
